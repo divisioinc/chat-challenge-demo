@@ -1,0 +1,6 @@
+export const grayLight = '#f6f6ff'
+export const graySemiLight = '#edeced'
+export const blue = '#6babf5'
+export const white = '#ffffff'
+export const smoke = '#e4ebf9'
+export const black = '#423f3f'
