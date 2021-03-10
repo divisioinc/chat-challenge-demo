@@ -103,7 +103,7 @@ const ConversationItem = ({ name, unread, lastMessage, isSelected, onClick }: Pr
           weight='light'
           size={12}
         >
-          {fromDate(lastMessage.created_at)}
+          {fromDate(lastMessage.createdAt)}
         </Text>
         {!!unreadMessages && (
           <StyledCounter

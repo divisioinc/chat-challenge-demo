@@ -9,7 +9,7 @@ import sendIcon from '../../assets/send.svg'
 import { IsLoading, Input } from '../../style-guide'
 import { graySemiLight } from '../../style-guide/colors'
 
-import api from '../../utils/api'
+import { API } from 'aws-amplify';
 
 import MessageItem from './MessageItem'
 
@@ -58,9 +58,10 @@ const useFetchMessages = (conversationId: string) => {
     const fetchMessages = async () => {
       setFetching(true)
 
-      const { data: { data: { messages } } } = await api.get(`/conversations/${conversationId}`)
+      const data = await API.get('messages', `/messages/${conversationId}`);
+      // const { data: { data: { messages } } } = await api.get(`/conversations/${conversationId}`)
 
-      setMessages(messages)
+      setMessages(data.messages)
       setFetching(false)
     }
 
@@ -82,7 +83,7 @@ const Messages = ({ conversationId }: Props) => {
       ...messages,
       {
         uuid: shortId.generate(),
-        body: text,
+        value: text,
         direction: 'outgoing',
         created_at: new Date().toISOString()
       }
@@ -93,10 +94,10 @@ const Messages = ({ conversationId }: Props) => {
     <StyledMessages>
       <IsLoading loading={isFetching}>
         <MessagesContainer>
-          {messages.map(({ uuid, body, direction }) => (
+          {messages.map(({ uuid, value, direction }) => (
             <MessageItem
               key={uuid}
-              message={body}
+              message={value}
               direction={direction}
             />
           ))}

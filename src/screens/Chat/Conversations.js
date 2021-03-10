@@ -8,7 +8,7 @@ import searchIcon from '../../assets/search.svg'
 import { IsLoading, Input, Blankslate } from '../../style-guide'
 import { smoke, white, graySemiLight } from '../../style-guide/colors'
 
-import api from '../../utils/api'
+import { API } from 'aws-amplify';
 
 import ConversationItem from './ConversationItem'
 
@@ -39,7 +39,7 @@ const useFetchConversations = () => {
 
   useEffect(() => {
     const fetchConversations = async () => {
-      const { data: { data } } = await api.get('/conversations')
+      const data = await API.get('conversations', '/conversations');
 
       setConversations(data)
       setFetching(false)
@@ -58,8 +58,8 @@ const Conversations = ({ conversationId, onSelectConversation }: Props) => {
   const filteredConversations = conversations
     .filter(({ name }) => name.toLowerCase().includes(textSearch))
     .sort((a, b) => {
-      const aDate = new Date(a.last_message.created_at)
-      const bDate = new Date(b.last_message.created_at)
+      const aDate = new Date(a.lastMessage.createdAt)
+      const bDate = new Date(b.lastMessage.createdAt)
 
       return bDate - aDate
     })
@@ -77,12 +77,12 @@ const Conversations = ({ conversationId, onSelectConversation }: Props) => {
         </StyledHeader>
         {filteredConversations.length
           ? (
-            filteredConversations.map(({ uuid, name, unread, last_message }) => (
+            filteredConversations.map(({ uuid, name, unread, lastMessage }) => (
               <ConversationItem
                 key={uuid}
                 name={name}
                 unread={unread}
-                lastMessage={last_message}
+                lastMessage={lastMessage}
                 onClick={() => onSelectConversation(uuid)}
                 isSelected={conversationId === uuid}
               />
