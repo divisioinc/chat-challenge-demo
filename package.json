@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "aws-amplify": "^3.3.23",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "date-fns": "^2.9.0",
     "flow-bin": "^0.117.0",
     "react": "^16.12.0",
